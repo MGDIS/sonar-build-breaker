@@ -128,4 +128,23 @@ public class AlertBreakerTest {
   private Measure newMeasure(Metric metric, Metric.Level level, String label) {
     return new Measure(metric).setAlertStatus(level).setAlertText(label);
   }
+  
+  @Test
+  public void failWhenErrorAlertsButDontBreak() {
+	Settings settings = new Settings().setProperty(BuildBreakerPlugin.NOT_BREAK_KEY, true);
+    AlertBreaker checker = new AlertBreaker(settings);
+    Logger logger = mock(Logger.class);
+    SensorContext context = mock(SensorContext.class);
+    when(context.getMeasures((MeasuresFilter) anyObject())).thenReturn(Arrays.<Measure> asList(
+        newMeasure(CoreMetrics.LINES, null, null),
+        newMeasure(CoreMetrics.COVERAGE, Metric.Level.ERROR, "Coverage<80"),
+        newMeasure(CoreMetrics.CLASS_COMPLEXITY, Metric.Level.ERROR, "Class complexity>50")
+        ));
+      
+      checker.analyseMeasures(context, logger);
+
+      verify(logger).error("[BUILD BREAKER] Coverage<80");
+      verify(logger).error("[BUILD BREAKER] Class complexity>50");
+      verify(logger).error("Alert thresholds have been hit (2 times).");
+  }
 }

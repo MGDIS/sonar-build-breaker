@@ -54,7 +54,12 @@ public class AlertBreaker extends BuildBreaker {
   protected void analyseMeasures(SensorContext context, Logger logger) {
     int count = countErrors(context, logger);
     if (count > 0) {
-      fail("Alert thresholds have been hit (" + count + " times).");
+      String message = "Alert thresholds have been hit (" + count + " times).";
+      if (settings.getBoolean(BuildBreakerPlugin.NOT_BREAK_KEY)) {
+    	logger.error(message);
+      } else {
+        fail(message);
+      }
     }
   }
 
