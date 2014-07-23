@@ -36,7 +36,12 @@ import java.util.List;
     name = "Forbidden configuration parameters",
     description = "Comma-seperated list of 'key=value' pairs that should break the build",
     global = true,
-    project = false)
+    project = false),
+  @Property(key = BuildBreakerPlugin.NOT_BREAK_KEY, defaultValue = "false", name = "Don't break the build", 
+    description = "If set to true don't break the build on alerts raised. Alerts are managed as warns . By default break the build.", 
+    global = true, 
+    project = true,
+    type = PropertyType.BOOLEAN)
 })
 public class BuildBreakerPlugin extends SonarPlugin {
 
@@ -45,6 +50,8 @@ public class BuildBreakerPlugin extends SonarPlugin {
   public static final String BUILD_BREAKER_LOG_STAMP = "[BUILD BREAKER] ";
 
   public static final String FORBIDDEN_CONF_KEY = "sonar.buildbreaker.forbiddenConf";
+  
+  public static final String NOT_BREAK_KEY = "sonar.buildbreaker.notbreak";
 
   public List getExtensions() {
     return Arrays.asList(AlertBreaker.class, ForbiddenConfigurationBreaker.class);
