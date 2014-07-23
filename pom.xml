@@ -7,8 +7,8 @@
     <relativePath>../parent</relativePath>
   </parent>
 
-  <artifactId>sonar-build-breaker-plugin</artifactId>
-  <version>1.1</version>
+  <artifactId>MGDIS-sonar-build-breaker-plugin</artifactId>
+  <version>1.1.1</version>
   <packaging>sonar-plugin</packaging>
 
   <name>Sonar Build Breaker Plugin</name>
