@@ -38,7 +38,7 @@ import java.util.List;
     global = true,
     project = false),
   @Property(key = BuildBreakerPlugin.NOT_BREAK_KEY, defaultValue = "false", name = "Don't break the build", 
-    description = "If set to true don't break the build on alerts raised. Alerts are managed as warns . By default break the build.", 
+    description = "If set to true don't break the build on alerts raised. Alerts are managed as simply WARN/ERROR log level. By default break the build.", 
     global = true, 
     project = true,
     type = PropertyType.BOOLEAN)
